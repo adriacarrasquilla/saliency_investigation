@@ -85,7 +85,7 @@ def casme_load_model(casm_path, classifier_load_mode="pickled", verbose=True):
 
     if verbose:
         print("\n=> Loading model from '{}'".format(casm_path))
-    checkpoint = torch.load(casm_path)
+    checkpoint = torch.load(casm_path, map_location=torch.device('cpu'))
 
     if classifier_load_mode == "pickled":
         classifier = archs.resnet50shared()

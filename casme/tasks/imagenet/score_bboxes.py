@@ -13,6 +13,7 @@ from casme.model_basics import casme_load_model, get_masks_and_check_predictions
 from casme.utils.torch_utils import ImagePathDataset
 import casme.tasks.imagenet.utils as imagenet_utils
 from casme import archs
+from casme.tasks.imagenet.sanity_checks import save_fig, get_image_arr
 
 import zconf
 import pyutils.io as io
@@ -151,7 +152,12 @@ def score(args, model, data_loader, bboxes, original_classifier, record_bboxes=F
     candidate_bbox_ls = []
 
     # data loop
+    print(len(data_loader))
     for i, ((input_, target), paths) in enumerate(data_loader):
+        print(f"Total images = {len(input_)}")
+        print(f"Step {i}")
+        if i > 0:
+            break
         if i > len(data_loader)*args.pot:
             break
 
@@ -207,6 +213,17 @@ def score(args, model, data_loader, bboxes, original_classifier, record_bboxes=F
                     input_=input_, target=target, model=model,
                     use_p=args.use_p,
                 )
+            # print(continuous)
+            # print(bbox_coords)
+            # print(classifier_outputs)
+            idx = 3
+            img = get_image_arr(input_)[idx]
+            save_fig(
+                img=img,
+                mask=continuous[idx],
+                title="test",
+                path="test.png",
+            )
             acc1, acc5 = classification_accuracy(classifier_outputs, target.to(device), topk=(1, 5))
             top1_meter.update(acc1.item(), n=target.shape[0])
             top5_meter.update(acc5.item(), n=target.shape[0])
@@ -240,7 +257,7 @@ def score(args, model, data_loader, bboxes, original_classifier, record_bboxes=F
             f1a_meter.update(np.array(f1s_for_image).mean())
             le_meter.update(1 - np.array(ious_for_image).max())
             om_meter.update(1 - (np.array(ious_for_image).max() * is_correct[idx]))
-
+        
         if model.get('special') == 'ground_truth':
             saliency_metric, sm1_ls, sm2_ls = compute_saliency_metric_ground_truth(
                 input_=input_,
