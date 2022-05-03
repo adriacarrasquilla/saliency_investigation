@@ -53,10 +53,6 @@ def main():
 
         pred_idx = torch.argmax(output)
         predicted_class = imagenet_labels[int(pred_idx)]
-        # print(img)
-        # print(predicted_class)
-        # print(torch.max(output))
-        # print(torch.min(output))
 
         ax.set(title=f"{title}: {predicted_class}", xticks=[], yticks=[])
 
