@@ -13,3 +13,4 @@ python test_tf_model.py --image ../saliency_investigation/demo_outputs/org.png \
 
 cd ../saliency_investigation
 python plot_output.py
+python compare_predictions.py > /dev/null 2>&1
