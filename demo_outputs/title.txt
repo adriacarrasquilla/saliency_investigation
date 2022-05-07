@@ -1,1 +1,1 @@
-Correctly classified as tench, Tinca tinca
+Classified as Indian elephant, Elephas maximus
