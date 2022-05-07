@@ -5,6 +5,7 @@ dependencies:
   - pip
   - pip:
     - attrs
+    - pyyaml
     - torchvision==0.5.0
     - opencv-python==4.1.2.30
     - beautifulsoup4==4.8.1

@@ -72,7 +72,7 @@ def main():
 
         target_class = imagenet_labels[int(target[0])]
 
-    continuous, binarized, rectangular, _, _, output = \
+    continuous, binarized, _, _, _, output = \
         get_masks_and_check_predictions(
             input_=input_, target=target, model=model,
             use_p=None,
