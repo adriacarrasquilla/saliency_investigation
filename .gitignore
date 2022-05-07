@@ -107,3 +107,6 @@ venv.bak/
 sync.sh
 .zsync.conf
 .zsync.json
+
+# Outputs
+demo_outputs/
